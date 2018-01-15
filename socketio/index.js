@@ -1,10 +1,8 @@
-import * as constants from '../../constants'
+import * as constants from '../constants'
 import { generateMessage, generateLocationMessage } from '../utils/message'
 
 export default function (io) {
   io.on('connection', (socket) => {
-    console.log('New user connected to chat server...');
-
     // new welcome message, goes to person connecting
     socket.emit(constants.NEW_MESSAGE, generateMessage(constants.ADMIN, constants.ADMIN_WELCOME_MESSAGE))
 
@@ -18,7 +16,6 @@ export default function (io) {
 
     // general message, goes to all users
     socket.on(constants.CREATE_MESSAGE, (data, cb) => {
-      console.log(data, cb, "data, cb");
       io.emit(constants.NEW_MESSAGE, generateMessage(data.from, data.text))
       cb('This is from the server')
     })
